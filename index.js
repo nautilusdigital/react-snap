@@ -267,9 +267,9 @@ const removeBlobs = async opt => {
  * @return Promise
  */
  const generateSitemap = async opt => {
-  const { pageUrl, indexRoutes } = opt;
+  const { sitemapPageUrl, indexRoutes } = opt;
   try{
-    indexRoutes.push(pageUrl)
+    indexRoutes.push(sitemapPageUrl)
   } catch (e) {
     return Promise.reject(e.message);
   }
@@ -746,11 +746,11 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
     },
     afterFetch: async ({ page, route, browser, addToQueue }) => {
       const pageUrl = `${basePath}${route}`;
-      const prodPageUrl = `https://cctech.io${route}`;
+      const sitemapPageUrl = `https://cctech.io${route}`;
       if (options.removeStyleTags) await removeStyleTags({ page });
       if (options.removeScriptTags) await removeScriptTags({ page });
       if (options.removeBlobs) await removeBlobs({ page });
-      if (options.generateSitemap) await generateSitemap({ prodPageUrl, indexRoutes });
+      if (options.generateSitemap) await generateSitemap({ sitemapPageUrl, indexRoutes });
       if (options.inlineCss) {
         const { cssFiles } = await inlineCss({
           page,
