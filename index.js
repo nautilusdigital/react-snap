@@ -267,7 +267,7 @@ const removeBlobs = async opt => {
  * @return Promise
  */
  const generateSitemap = async opt => {
-  const { page, pageUrl, indexRoutes } = opt;
+  const { pageUrl, indexRoutes } = opt;
   try{
     indexRoutes.push(pageUrl)
   } catch (e) {
