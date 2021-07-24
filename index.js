@@ -269,13 +269,7 @@ const removeBlobs = async opt => {
  const generateSitemap = async opt => {
   const { page, pageUrl, indexRoutes } = opt;
   try{
-    console.log('generate sitemap function')
-    console.log('-start-')
-    console.log(pageUrl)
-    console.log(indexRoutes)
     indexRoutes.push(pageUrl)
-    console.log(indexRoutes)
-    console.log('-end-')
   } catch (e) {
     return Promise.reject(e.message);
   }
@@ -752,7 +746,6 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
     },
     afterFetch: async ({ page, route, browser, addToQueue }) => {
       const pageUrl = `${basePath}${route}`;
-      await console.log('--AFTER FETCH--')
       if (options.removeStyleTags) await removeStyleTags({ page });
       if (options.removeScriptTags) await removeScriptTags({ page });
       if (options.removeBlobs) await removeBlobs({ page });
@@ -901,12 +894,58 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         );
       }
       if (generateSitemap) {
-        console.log("@@--ON FILE END SITEMAP--@@")
-        console.log("---")
-        head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?\>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
-        tail = "</urlset>"
+        console.log("-generate sitemap-")
+        head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?\>\n\t<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+        tail = "\n</urlset>"
         console.log(indexRoutes)
-        console.log("@@@@")
+        console.log('----')
+        console.log('destinationDir')
+        console.log(destinationDir)
+        console.log("@--Done--@")
+        
+        try {
+          /*let sitemapPageData = head + indexRoutes + tail**/
+          let sitemapPageDate = "2021-04-02T06:51:09+00:00"
+          let sitemapBlogDate = "2021-04-16T22:37:16+00:00"
+
+          let sitemapData =
+          "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
+          + "\n\t<sitemap\>"
+          +   "\n\t\t<loc>https://cctech.io/post-sitemap.xml</loc\>"
+          +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
+          + "\n\t</sitemap\>"
+          + "\n\t<sitemap\>"
+          +     "\n\t\t<loc>https://old.cctech.io/page-sitemap.xml</loc\>"
+          +     `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
+          +   "\n\t</sitemap\>"
+          + "\n</sitemapindex\>"
+
+          let sitemapPageData = (routes) => {
+            head = "<sitemapindex xmlns=\"http://www.google.com/schemas/sitemap/0.84\">"
+            body = ""
+            routes.forEach(
+              route => body += "\n\t<sitemap>"
+                            + `\n\t\t<loc>${route}</loc>`
+                            + "\n\t</sitemap>"
+            )
+            tail = "\n</sitemapindex>"
+
+            return head + body + tail
+          }
+        
+          nativeFs.writeFileSync(
+            `${destinationDir}/page-sitemap.xml`,
+            sitemapPageData(indexRoutes)
+          );
+
+          nativeFs.writeFileSync(
+            `${destinationDir}/sitemap.xml`,
+            sitemapData
+          );
+
+        } catch (err) {
+          console.log('Error writing sitemap data:' + err.message)
+        }
       }
     }
   });
