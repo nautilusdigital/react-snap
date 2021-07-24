@@ -904,35 +904,34 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         console.log(destinationDir)
         console.log("@--Done--@")
         
+        /*let sitemapPageData = head + indexRoutes + tail**/
+        let sitemapPageDate = "2021-04-02T06:51:09+00:00"
+        let sitemapBlogDate = "2021-04-16T22:37:16+00:00"
+
+        let sitemapData =
+        "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
+        + "\n\t<sitemap\>"
+        +   "\n\t\t<loc>https://cctech.io/post-sitemap.xml</loc\>"
+        +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
+        + "\n\t</sitemap\>"
+        + "\n\t<sitemap\>"
+        +     "\n\t\t<loc>https://old.cctech.io/page-sitemap.xml</loc\>"
+        +     `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
+        +   "\n\t</sitemap\>"
+        + "\n</sitemapindex\>"
+
+        let sitemapPageData = (routes) => {
+          head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                + "\n<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">"
+          body = ""
+          routes.forEach(
+            route => body += `\n\t<url><loc>${route}</loc></url>`
+          )
+          tail = "\n</urlset>"
+          return head + body + tail
+        }
+
         try {
-          /*let sitemapPageData = head + indexRoutes + tail**/
-          let sitemapPageDate = "2021-04-02T06:51:09+00:00"
-          let sitemapBlogDate = "2021-04-16T22:37:16+00:00"
-
-          let sitemapData =
-          "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
-          + "\n\t<sitemap\>"
-          +   "\n\t\t<loc>https://cctech.io/post-sitemap.xml</loc\>"
-          +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
-          + "\n\t</sitemap\>"
-          + "\n\t<sitemap\>"
-          +     "\n\t\t<loc>https://old.cctech.io/page-sitemap.xml</loc\>"
-          +     `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
-          +   "\n\t</sitemap\>"
-          + "\n</sitemapindex\>"
-
-          let sitemapPageData = (routes) => {
-            head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                  + "\n<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">"
-            body = ""
-            routes.forEach(
-              route => body += `\n\t<url><loc>${route}</loc></url>`
-            )
-            tail = "\n</urlset>"
-
-            return head + body + tail
-          }
-        
           nativeFs.writeFileSync(
             `${destinationDir}/page-sitemap.xml`,
             sitemapPageData(indexRoutes)
@@ -942,7 +941,6 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
             `${destinationDir}/sitemap.xml`,
             sitemapData
           );
-
         } catch (err) {
           console.log('Error writing sitemap data:' + err.message)
         }
