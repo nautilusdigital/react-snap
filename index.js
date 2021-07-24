@@ -270,6 +270,7 @@ const removeBlobs = async opt => {
   const { sitemapPageUrl, indexRoutes } = opt;
   try{
     indexRoutes.push(sitemapPageUrl)
+    return Promise.resolve(true)
   } catch (e) {
     return Promise.reject(e.message);
   }
