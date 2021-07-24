@@ -921,14 +921,13 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
           + "\n</sitemapindex\>"
 
           let sitemapPageData = (routes) => {
-            head = "<sitemapindex xmlns=\"http://www.google.com/schemas/sitemap/0.84\">"
+            head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                  + "\n<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">"
             body = ""
             routes.forEach(
-              route => body += "\n\t<sitemap>"
-                            + `\n\t\t<loc>${route}</loc>`
-                            + "\n\t</sitemap>"
+              route => body += `\n\t<url><loc>${route}</loc></url>`
             )
-            tail = "\n</sitemapindex>"
+            tail = "\n</urlset>"
 
             return head + body + tail
           }
