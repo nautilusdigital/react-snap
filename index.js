@@ -895,14 +895,11 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         );
       }
       if (generateSitemap) {
-        console.log("-generate sitemap-")
+        console.log("🗺️  Generating Sitemap...")
         head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?\>\n\t<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
         tail = "\n</urlset>"
         console.log(indexRoutes)
-        console.log('----')
-        console.log('destinationDir')
-        console.log(destinationDir)
-        console.log("@--Done--@")
+        console.log('📂 destinationDir:', destinationDir)
         
         /*let sitemapPageData = head + indexRoutes + tail**/
         let sitemapPageDate = "2021-04-02T06:51:09+00:00"
@@ -944,6 +941,8 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         } catch (err) {
           console.log('Error writing sitemap data:' + err.message)
         }
+
+        console.log("🏁 Done -- Sitemap Generated!")
       }
     }
   });
