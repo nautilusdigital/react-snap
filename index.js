@@ -903,17 +903,19 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         console.log('📂 destinationDir:', destinationDir)
         
         /*let sitemapPageData = head + indexRoutes + tail**/
-        let sitemapPageDate = "2021-04-02T06:51:09+00:00"
+        let sitemapBlogUrl = "https://cctech.io/post-sitemap.xml"
         let sitemapBlogDate = "2021-04-16T22:37:16+00:00"
+        let sitemapPageUrl = "https://cctech.io/page-sitemap.xml"
+        let sitemapPageDate = "2021-04-02T06:51:09+00:00"
 
         let sitemapData =
         "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
         + "\n\t<sitemap\>"
-        +   "\n\t\t<loc>https://cctech.io/post-sitemap.xml</loc\>"
+        +   `\n\t\t<loc>${sitemapBlogUrl}</loc\>`
         +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
         + "\n\t</sitemap\>"
         + "\n\t<sitemap\>"
-        +     "\n\t\t<loc>https://old.cctech.io/page-sitemap.xml</loc\>"
+        +     `\n\t\t<loc>${sitemapPageUrl}</loc\>`
         +     `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
         +   "\n\t</sitemap\>"
         + "\n</sitemapindex\>"
