@@ -895,7 +895,7 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         );
       }
       if (generateSitemap) {
-        console.log("🗺️  Generating Sitemap...")
+        console.log("\n🗺️  Generating Sitemap...")
         head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?\>\n\t<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
         tail = "\n</urlset>"
         console.log(indexRoutes)
