@@ -747,7 +747,8 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
     },
     afterFetch: async ({ page, route, browser, addToQueue }) => {
       const pageUrl = `${basePath}${route}`;
-      const sitemapPageUrl = `https://cctech.io${route}`;
+      const productionBasePath = process.env.REACT_APP_DOMAIN_URL || basePath
+      const sitemapPageUrl = `${productionBasePath}${route}`;
       if (options.removeStyleTags) await removeStyleTags({ page });
       if (options.removeScriptTags) await removeScriptTags({ page });
       if (options.removeBlobs) await removeBlobs({ page });
@@ -901,19 +902,23 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         tail = "\n</urlset>"
         console.log(indexRoutes)
         console.log('📂 destinationDir:', destinationDir)
+
+        const productionBasePath = process.env.REACT_APP_DOMAIN_URL || basePath
+        console.log('🔼 productionBasePath:', productionBasePath)
+        console.log('🔽 publicPath:', publicPath)
         
         /*let sitemapPageData = head + indexRoutes + tail**/
-        let sitemapBlogUrl = "https://cctech.io/post-sitemap.xml"
+        let sitemapBlogUrl = `${productionBasePath}/post-sitemap.xml`
         let sitemapBlogDate = "2021-04-16T22:37:16+00:00"
-        let sitemapPageUrl = "https://cctech.io/page-sitemap.xml"
+        let sitemapPageUrl = `${productionBasePath}/page-sitemap.xml`
         let sitemapPageDate = "2021-04-02T06:51:09+00:00"
 
         let sitemapData =
         "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
-        + "\n\t<sitemap\>"
-        +   `\n\t\t<loc>${sitemapBlogUrl}</loc\>`
-        +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
-        + "\n\t</sitemap\>"
+        // + "\n\t<sitemap\>"
+        // +   `\n\t\t<loc>${sitemapBlogUrl}</loc\>`
+        // +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
+        // + "\n\t</sitemap\>"
         + "\n\t<sitemap\>"
         +     `\n\t\t<loc>${sitemapPageUrl}</loc\>`
         +     `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
