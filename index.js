@@ -269,7 +269,9 @@ const removeBlobs = async opt => {
  const generateSitemap = async opt => {
   const { sitemapPageUrl, indexRoutes } = opt;
   try{
-    indexRoutes.push(sitemapPageUrl)
+    if(!sitemapPageUrl.includes('/404.html')){
+      indexRoutes.push(sitemapPageUrl)
+    }
     return Promise.resolve(true)
   } catch (e) {
     return Promise.reject(e.message);
