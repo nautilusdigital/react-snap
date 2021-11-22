@@ -266,10 +266,10 @@ const removeBlobs = async opt => {
  * @param {{page: Page}} opt
  * @return Promise
  */
- const generateSitemap = async opt => {
+const generateSitemap = async opt => {
   const { sitemapPageUrl, indexRoutes } = opt;
-  try{
-    if(!sitemapPageUrl.includes('/404.html')){
+  try {
+    if (!sitemapPageUrl.includes('/404.html')) {
       indexRoutes.push(sitemapPageUrl)
     }
     return Promise.resolve(true)
@@ -325,7 +325,7 @@ const inlineCss = async opt => {
   if (cssSize > twentyKb)
     console.log(
       `⚠️  warning: inlining CSS more than 20kb (${cssSize /
-        1024}kb, ${cssStrategy})`
+      1024}kb, ${cssStrategy})`
     );
 
   if (cssStrategy === "critical") {
@@ -908,28 +908,28 @@ const run = async (userOptions, { fs } = { fs: nativeFs }) => {
         const productionBasePath = process.env.REACT_APP_DOMAIN_URL || basePath
         console.log('🔼 productionBasePath:', productionBasePath)
         console.log('🔽 publicPath:', publicPath)
-        
+
         /*let sitemapPageData = head + indexRoutes + tail**/
         let sitemapBlogUrl = `${productionBasePath}/post-sitemap.xml`
-        let sitemapBlogDate = "2021-04-16T22:37:16+00:00"
+        let sitemapBlogDate = "2021-11-22T12:30:00+00:00"
         let sitemapPageUrl = `${productionBasePath}/page-sitemap.xml`
         let sitemapPageDate = "2021-04-02T06:51:09+00:00"
 
         let sitemapData =
-        "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
-        // + "\n\t<sitemap\>"
-        // +   `\n\t\t<loc>${sitemapBlogUrl}</loc\>`
-        // +   `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
-        // + "\n\t</sitemap\>"
-        + "\n\t<sitemap\>"
-        +     `\n\t\t<loc>${sitemapPageUrl}</loc\>`
-        +     `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
-        +   "\n\t</sitemap\>"
-        + "\n</sitemapindex\>"
+          "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\>"
+          + "\n\t<sitemap\>"
+          + `\n\t\t<loc>${sitemapPageUrl}</loc\>`
+          + `\n\t\t<lastmod>${sitemapPageDate}</lastmod\>`
+          + "\n\t</sitemap\>"
+          + "\n\t<sitemap\>"
+          + `\n\t\t<loc>${sitemapBlogUrl}</loc\>`
+          + `\n\t\t<lastmod>${sitemapBlogDate}</lastmod\>`
+          + "\n\t</sitemap\>"
+          + "\n</sitemapindex\>"
 
         let sitemapPageData = (routes) => {
           head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                + "\n<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">"
+            + "\n<urlset xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">"
           body = ""
           routes.forEach(
             route => body += `\n\t<url><loc>${route}</loc></url>`
